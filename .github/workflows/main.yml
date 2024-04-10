@@ -1,31 +1,31 @@
 name: CI
 
-on:  [push]
+on: 
+  push:
 
 jobs:
   sast_scan: 
-    name: Run Bandit Scan
+    name: Ejecutar Escaneo Bandit
     runs-on: ubuntu-latest
 
     steps:
-    - name: check code
+    - name: Verificar código
       uses: actions/checkout@v2
       
-    - name: python setup
+    - name: Configurar Python
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
         
-    - name: Bandit installation
+    - name: Instalación de Bandit
       run: pip install bandit
 
-    - name: Run Bandit Scan
+    - name: Ejecutar Escaneo Bandit
       run: bandit -ll -ii -r . -f json -o bandit-reprt.json
       
-    - name: upload artifact
-      uses: action/upload-artifact@v3
+    - name: Subir artefacto
+      uses: actions/upload-artifact@v3
       if: always()
       with: 
-        name: bandit-findings
+        name: hallazgos-bandit
         path: bandit-reprt.json
-        
